@@ -10,8 +10,8 @@
     <div class="w-75 shadow-sm p-3">
         <div class="d-flex align-items-lg-start justify-content-between">
             <div class="w-75">
+                <h4 class="lh-1 bar"><b>{{patient_detail.patient_name}}</b></h4>
                 <small class="lh-1 text-muted">Patient ID : &nbsp; {{patient_detail.patient_id}}</small>
-                <h4 class="lh-1"><b>{{patient_detail.patient_name}}</b></h4>
             </div>
             <div class="w-25 d-flex flex-column">
                 <small class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; {{patient_detail.patient_address}}</small>
@@ -32,9 +32,9 @@
                 <small><b>BMI : </b>&nbsp; Normal </small>
             </div>
             <div class="w-50 d-flex flex-column">
-                <small><b>Blood Pressure : </b>&nbsp; 163 mmHg </small>
-                <small><b>Pulse : </b>&nbsp; 49.9  </small>
-                <small><b>Body Temprature : </b>&nbsp;  98 F </small>
+                <small><b>Blood Pressure : </b>&nbsp; {{patient_detail.patient_blood_pressure}} mmHg </small>
+                <small><b>Pulse : </b>&nbsp;  {{patient_detail.patient_pulse}}  </small>
+                <small><b>Body Temprature : </b>&nbsp;   {{patient_detail.patient_body_temprature}} F </small>
             </div>
         </div>
     </div>
