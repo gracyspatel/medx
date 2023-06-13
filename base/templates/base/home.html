@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+        <div class="d-flex justify-content-between">
+            <div class="mb-3">
+                <h6>Good Morning,</h6>
+                <h5><b>Dr. Gracy Sanjaykumar Patel</b></h5>
+                <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; Dermatologist &nbsp; </i>( MBBS, PG ) </p>
+            </div>
+            <div class="d-flex flex-column justify-content-startend text-start">
+                <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; Medo Health Pvt. Ltd.</p>
+                <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</p>
+                <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</p>
+                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; gracy1168@gmail.com</p>
+            </div>
+        </div>
+        <div class="d-flex gap-3 ">
+            <div class="w-25 shadow-sm p-2">
+                <h6><b>Total Patients</b></h6>
+                <h3>2300</h3>
+            </div>
+            <div class="w-25 shadow-sm p-2">
+                <h6><b>Today's Total Patient</b></h6>
+                <h3>34</h3>
+            </div>
+        </div>
+        <div class="mt-3 mb-2 d-flex align-items-center justify-content-between">
+            <h5><b>Recent History &nbsp; <i class="fa fa-history"></i></b></h5>
+            <div>
+                <a class="btn btn-primary" href={% url 'patient-details' %}>View &nbsp; <i class="fa fa-eye"></i></a>
+                <button class="btn btn-primary">New Case &nbsp; <i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <div>
+            <table class="table table-responsive table-bordered table-hover " style="overflow-x:hidden;overflow-y:auto;">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Sex</th>
+                    <th scope="col">Phone No.</th>
+                    <th scope="col">Age</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients_details %}
+                        <tr>
+                            <th scope="row">{{patient.patient_id}}</th>
+                            <td>{{patient.patient_name}}</td>
+                            <td>{{patient.patient_age}}</td>
+                            <td>+91 {{patient.patient_phone}}</td>
+                            <td>{{patient.patient_sex}}</td>
+                            <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+{% endblock %}

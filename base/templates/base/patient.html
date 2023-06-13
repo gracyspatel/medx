@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+        <div class="mb-3"><h6>Patient Details</h6></div>
+        <p>Details of the patient: </p>
+        <p>Name : {{patient_detail.patient_name}}</p>
+        <p>Name : {{patient_detail.patient_id}}</p>
+        <p>Name : {{patient_detail.patient_age}}</p>
+        <p>Name : {{patient_detail.patient_sex}}</p>
+        <p>Name : {{patient_detail.patient_phone}}</p>
+    </div>
+{% endblock %}

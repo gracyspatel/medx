@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+        <div>
+          <a class="btn btn-light shadow-sm rounded-5 mb-2" href="/"><i class="fa fa-arrow-left"></i></a>
+          <div class="mt-2 mb-1"><h5><b>Patients Details</b></h5></div>
+        </div>
+        <div>
+        <form class="d-flex gap-2 mb-3">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+        <table class="table table-responsive table-bordered table-hover " style="overflow-x:hidden;overflow-y:auto;">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Sex</th>
+                <th scope="col">Phone No.</th>
+                <th scope="col">Age</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients_details %}
+                    <tr>
+                        <th scope="row">{{patient.patient_id}}</th>
+                        <td>{{patient.patient_name}}</td>
+                        <td>{{patient.patient_age}}</td>
+                        <td>+91 {{patient.patient_phone}}</td>
+                        <td>{{patient.patient_sex}}</td>
+                        <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+{% endblock %}
