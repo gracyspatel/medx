@@ -1,13 +1,51 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
-        <div class="mb-3"><h6>Patient Details</h6></div>
-        <p>Details of the patient: </p>
-        <p>Name : {{patient_detail.patient_name}}</p>
-        <p>Name : {{patient_detail.patient_id}}</p>
-        <p>Name : {{patient_detail.patient_age}}</p>
-        <p>Name : {{patient_detail.patient_sex}}</p>
-        <p>Name : {{patient_detail.patient_phone}}</p>
+<div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+    <div>
+      <a class="btn btn-light shadow-sm rounded-5 mb-2" href="/"><i class="fa fa-arrow-left"></i></a>
+      {% comment %} <div class="mt-2 mb-1"><h5><b>Patient Details</b></h5></div> {% endcomment %}
+    </div>
+    <div class="d-flex gap-3">
+    <div class="w-75 shadow-sm p-3">
+        <div class="d-flex align-items-lg-start justify-content-between">
+            <div class="w-75">
+                <small class="lh-1 text-muted">Patient ID : &nbsp; {{patient_detail.patient_id}}</small>
+                <h4 class="lh-1"><b>{{patient_detail.patient_name}}</b></h4>
+            </div>
+            <div class="w-25 d-flex flex-column">
+                <small class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</small>
+                <small class="lh-2"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</small>
+                <small class="lh-2"><i class="fa fa-envelope"></i> &nbsp; gracy1168@gmail.com</small>
+            </div>
+        </div>
+        <hr/>
+        <div class="d-flex gap-4">
+            <div class="w-50 d-flex flex-column">
+                <small><b>Age :</b> &nbsp; {{patient_detail.patient_age}} </small>
+                <small><b>Sex :</b> &nbsp; {{patient_detail.patient_sex}}</small>
+                <small><b>Blood Group : </b>&nbsp; O -ve </small>
+            </div>
+            <div class="w-50 d-flex flex-column">
+                <small><b>Height : </b>&nbsp; 163 cm </small>
+                <small><b>Weight : </b>&nbsp; 49.9 kg </small>
+                <small><b>BMI : </b>&nbsp; Normal </small>
+            </div>
+            <div class="w-50 d-flex flex-column">
+                <small><b>Blood Pressure : </b>&nbsp; 163 mmHg </small>
+                <small><b>Pulse : </b>&nbsp; 49.9  </small>
+                <small><b>Body Temprature : </b>&nbsp;  98 F </small>
+            </div>
+        </div>
+    </div>
+    <div class="w-25 shadow-sm p-3 d-flex flex-column">
+        <small><b>Smoking : </b>&nbsp; High </small>
+        <small><b>Drinking : </b>&nbsp; Moderate  </small>
+        <small><b>Drugs Intake : </b>&nbsp;  Nil </small>
+        <br/>
+        <small><b>Previous Medical History : </b></small>
+        <small>Asthama, High Blood Pressure</small>
+    </div>
+</div>
     </div>
 {% endblock %}
