@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Patient
+import datetime
 
 # dummy data 
 patient_table = [
@@ -63,8 +64,15 @@ patient_table = [
 
 # Create your views here.
 def main(request):
+    current_time = datetime.datetime.now().time()
+    if current_time < datetime.time(12):
+        greeting = "Morning"
+    elif current_time < datetime.time(17):
+        greeting = "Afternoon"
+    else:
+        greeting = "Evening"
     patient_list = Patient.objects.all()
-    return render(request,'base/home.html',context={"patients_details":patient_list[0:5]})
+    return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting})
 
 def patients_list(request):
     patient_list = Patient.objects.all()
