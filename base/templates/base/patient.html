@@ -14,21 +14,21 @@
                 <h4 class="lh-1"><b>{{patient_detail.patient_name}}</b></h4>
             </div>
             <div class="w-25 d-flex flex-column">
-                <small class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</small>
-                <small class="lh-2"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</small>
-                <small class="lh-2"><i class="fa fa-envelope"></i> &nbsp; gracy1168@gmail.com</small>
+                <small class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; {{patient_detail.patient_address}}</small>
+                <small class="lh-2"><i class="fa fa-phone"></i> &nbsp; +91 {{patient_detail.patient_phone_number}}</small>
+                <small class="lh-2"><i class="fa fa-envelope"></i> &nbsp; {{patient_detail.patient_email}}</small>
             </div>
         </div>
         <hr/>
         <div class="d-flex gap-4">
             <div class="w-50 d-flex flex-column">
-                <small><b>Age :</b> &nbsp; {{patient_detail.patient_age}} </small>
+                <small><b>Age :</b> &nbsp; {{patient_detail.patient_dob}} </small>
                 <small><b>Sex :</b> &nbsp; {{patient_detail.patient_sex}}</small>
-                <small><b>Blood Group : </b>&nbsp; O -ve </small>
+                <small><b>Blood Group : </b>&nbsp; {{patient_detail.patient_blood_group}} </small>
             </div>
             <div class="w-50 d-flex flex-column">
-                <small><b>Height : </b>&nbsp; 163 cm </small>
-                <small><b>Weight : </b>&nbsp; 49.9 kg </small>
+                <small><b>Height : </b>&nbsp; {{patient_detail.patient_height}} cm </small>
+                <small><b>Weight : </b>&nbsp; {{patient_detail.patient_weight}} kg </small>
                 <small><b>BMI : </b>&nbsp; Normal </small>
             </div>
             <div class="w-50 d-flex flex-column">
@@ -39,12 +39,12 @@
         </div>
     </div>
     <div class="w-25 shadow-sm p-3 d-flex flex-column">
-        <small><b>Smoking : </b>&nbsp; High </small>
-        <small><b>Drinking : </b>&nbsp; Moderate  </small>
-        <small><b>Drugs Intake : </b>&nbsp;  Nil </small>
+        <small><b>Smoking : </b>&nbsp; {{patient_detail.patient_smoking}} </small>
+        <small><b>Drinking : </b>&nbsp; {{patient_detail.patient_alcohol}}  </small>
+        <small><b>Drugs Intake : </b>&nbsp;  {{patient_detail.patient_drugs}} </small>
         <br/>
         <small><b>Previous Medical History : </b></small>
-        <small>Asthama, High Blood Pressure</small>
+        <small>{{patient_detail.patient_previous_medical_history}}</small>
     </div>
 </div>
     </div>

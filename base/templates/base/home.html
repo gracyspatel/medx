@@ -40,7 +40,7 @@
                     <th scope="col">Full Name</th>
                     <th scope="col">Age</th>
                     <th scope="col">Phone No.</th>
-                    <th scope="col">Sex</th>
+                    <th scope="col">Gender</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -49,8 +49,8 @@
                         <tr>
                             <th scope="row">{{patient.patient_id}}</th>
                             <td>{{patient.patient_name}}</td>
-                            <td>{{patient.patient_age}}</td>
-                            <td>+91 {{patient.patient_phone}}</td>
+                            <td>{{patient.patient_dob}}</td>
+                            <td>+91 {{patient.patient_phone_number}}</td>
                             <td>{{patient.patient_sex}}</td>
                             <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
                         </tr>

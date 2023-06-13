@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Patient
 
 # dummy data 
 patient_table = [
@@ -62,15 +63,17 @@ patient_table = [
 
 # Create your views here.
 def main(request):
-    return render(request,'base/home.html',context={"patients_details":patient_table[0:5]})
+    patient_list = Patient.objects.all()
+    return render(request,'base/home.html',context={"patients_details":patient_list[0:5]})
 
 def patients_list(request):
-    return render(request,'base/patient-details.html',context={"patients_details":patient_table})
+    patient_list = Patient.objects.all()
+    return render(request,'base/patient-details.html',context={"patients_details":patient_list})
 
 def patient_details(request,id):
-    patient = None
-    for i in patient_table:
-        if i['patient_id'] == int(id):
-            patient = i
-    # patient = patient_details.objects.get(id=id)
+    # patient = None
+    # for i in patient_table:
+    #     if i['patient_id'] == int(id):
+    #         patient = i
+    patient = Patient.objects.get(id=id)
     return render(request,'base/patient.html',context={"patient_detail":patient})
