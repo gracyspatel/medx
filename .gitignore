@@ -31,3 +31,5 @@ Thumbs.db
 /venv
 /vscode
 /idea
+
+*db.sqlite3
