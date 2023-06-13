@@ -61,7 +61,6 @@ patient_table = [
         "patient_sex":"Male",
     }
 ]
-
 # Create your views here.
 def main(request):
     current_time = datetime.datetime.now().time()
