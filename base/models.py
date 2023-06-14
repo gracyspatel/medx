@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # for gender choice filling
 GENDER_CHOICES = (
@@ -12,6 +13,8 @@ CHOICES = (
     ('No', 'No'),
 )
 
+class User(AbstractUser):
+    pass
 
 # Create your models here.
 class Patient(models.Model):
