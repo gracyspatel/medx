@@ -42,9 +42,16 @@ class Patient(models.Model):
         return self.patient_name
 
 
-# class Doctor_details(models.Model):
-#     d_id = models.IntegerField()
-#     d_name = models.CharField(max_length=100)
-#     d_email = models.EmailField(max_length=100)
-#     d_password = models.CharField
+class Doctor_details(models.Model):
+    doctor_id = models.IntegerField()
+    doctor_name = models.CharField(max_length=100)
+    doctor_email = models.EmailField(max_length=100)
+    doctor_designation = models.CharField(max_length=100)
+    doctor_hospital_name = models.CharField(max_length=100)
+    doctor_hospital_location = models.CharField(max_length=100)
+    doctor_education = models.CharField(max_length=100)
+    doctor_mobile = models.CharField(max_length=10, null=False)
+
+    def __str__(self):
+        return self.doctor_name
 
