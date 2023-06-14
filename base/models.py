@@ -42,6 +42,24 @@ class Patient(models.Model):
         return self.patient_name
 
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 class Doctor_details(models.Model):
     doctor_id = models.IntegerField()
     doctor_name = models.CharField(max_length=100)
