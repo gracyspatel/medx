@@ -12,17 +12,17 @@
                 <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; Medo Health Pvt. Ltd.</p>
                 <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</p>
                 <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</p>
-                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; dhvani@gmail.com</p>
+                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; {{request.user.email}}</p>
             </div>
         </div>
         <div class="d-flex gap-3 ">
             <div class="w-25 shadow-sm p-2">
                 <h6><b>Total Patients</b></h6>
-                <h3>2300</h3>
+                <h3>{{patient_count}}</h3>
             </div>
             <div class="w-25 shadow-sm p-2">
                 <h6><b>Today's Total Patient</b></h6>
-                <h3>34</h3>
+                <h3>{{todays_patient}}</h3>
             </div>
         </div>
         <div class="mt-3 mb-2 d-flex align-items-center justify-content-between">

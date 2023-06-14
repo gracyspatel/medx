@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # for gender choice filling
 GENDER_CHOICES = (
@@ -16,6 +17,7 @@ CHOICES = (
 # Create your models here.
 class Patient(models.Model):
     patient_id = models.IntegerField()
+    doctor_id = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     patient_name = models.CharField(max_length=100)
     patient_email = models.EmailField(max_length=100)
     patient_phone_number = models.CharField(max_length=10, null=False)

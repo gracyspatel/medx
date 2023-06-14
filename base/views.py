@@ -6,7 +6,9 @@ from django.contrib.auth import authenticate,login, logout
 from .models import Patient
 from .forms import PatientForm
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 import datetime
+from datetime import date
 
 # dummy data 
 patient_table = [
@@ -69,6 +71,8 @@ patient_table = [
 ]
 # Create your views here.
 def doctor_login(request):
+    if request.user.is_authenticated:
+        return redirect('main')
     
     if request.method == "POST":
         username = request.POST.get('username')
@@ -89,6 +93,23 @@ def doctor_login(request):
     context = {}
     return render(request,'base/login.html',context)
 
+def doctor_register(request):
+    if request.user.is_authenticated:
+        return redirect('main')
+    form = UserCreationForm()
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            login(request,user)
+            return redirect('main')
+        else:
+            messages.error(request,"Some Error Occured")
+    context = {'form':form}
+    return render(request,'base/register.html',context)
+
 def doctor_logout(request):
     logout(request)
     return redirect('doctor-login')
@@ -102,16 +123,28 @@ def main(request):
         greeting = "Afternoon"
     else:
         greeting = "Evening"
-    patient_list = Patient.objects.all()
-    return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting})
+    # patient_list = Patient.objects.all()
+    doctor_id = User.objects.get(username=request.user).id
+    patient_list = Patient.objects.filter(
+            doctor_id = doctor_id
+        )
+    patient_count = patient_list.count()
+    today = date.today()
+    todays_patient = Patient.objects.filter(
+            created__date = today,
+            doctor_id = doctor_id
+        ).count()
+    return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting,"patient_count":patient_count,"todays_patient":todays_patient})
 
 @login_required(login_url="doctor-login")
 def patients_list(request):
     # patient_list = Patient.objects.all()
     q = request.GET.get('q') if request.GET.get('q') != None else ""
+    doctor_id = User.objects.get(username=request.user).id 
     patient_list = Patient.objects.filter(
             Q(patient_id__icontains = q) |
-            Q(patient_name__icontains = q)
+            Q(patient_name__icontains = q),
+            doctor_id = doctor_id
         )
     return render(request,'base/patient-details.html',context={"patients_details":patient_list})
 
@@ -122,6 +155,8 @@ def patient_details(request,id):
     #     if i['patient_id'] == int(id):
     #         patient = i
     patient = Patient.objects.get(id=id)
+    if(request.user != patient.doctor_id):
+        return redirect('patient-details')
     return render(request,'base/patient.html',context={"patient_detail":patient})
 
 @login_required(login_url="doctor-login")
@@ -140,6 +175,8 @@ def add_patient(request):
 def update_patient(request,id):
     patient = Patient.objects.get(id=id)
     form = PatientForm(instance=patient)
+    if(request.user != patient.doctor_id):
+        return redirect('patient-details')
     
     if request.method == 'POST':
         form = PatientForm(request.POST,instance=patient)
@@ -153,6 +190,8 @@ def update_patient(request,id):
 @login_required(login_url="doctor-login")
 def delete_patient(request,id):
   patient = Patient.objects.get(id=id)
+  if(request.user != patient.doctor_id):
+        return redirect('patient-details')
   if request.method == "POST":
     patient.delete()
     return redirect('patient-details')

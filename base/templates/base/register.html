@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden setheight">
+        <div class="mt-2 mb-1">
+            <h5 class="bar"><b>Register</b></h5>
+            <div class="h-75 d-flex align-items-center justify-content-center p-3">
+                <form method="POST" action="" class="container">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <br/>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+                    <br/>
+                {% for message in messages %}
+                    <small {% if message.tags %} class="text-danger {{ message.tags }}" {% endif %}>** {{message}}</small>
+                {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
