@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between">
             <div class="mb-3">
                 <h6>Good {{greeting}},</h6>
-                <h5><b><span class="text-danger">Dr.</span> Dhvani Sanjaykumar Patel</b></h5>
+                <h5><b><span class="text-danger">Dr.</span> {{request.user.first_name}} {{request.user.last_name}}</b></h5>
                 <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; Dermatologist &nbsp; </i>( MBBS, PG ) </p>
             </div>
             <div class="d-flex flex-column justify-content-startend text-start">

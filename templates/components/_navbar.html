@@ -4,8 +4,13 @@
         <b>Med<span class="text-danger">X</span></b>
       </a>
       {% if request.user.is_authenticated %}
+      <div class="d-flex align-items-center justify-content-center gap-3">  
+        <h6 class="bar navbar-brand">
+          <b>{{request.user}}</b>
+        </h6>
         <a class="btn btn-primary" href={% url 'doctor-logout' %}>Logout &nbsp; <i class="fa fa-sign-out"></i></a>
-      {% else %}  
+      </div>
+        {% else %}  
         <a class="btn btn-primary" href={% url 'doctor-login' %}>Register &nbsp; <i class="fa fa-user-circle-o"></i></a>
       {% endif %}
     </div>
