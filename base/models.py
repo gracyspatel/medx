@@ -40,11 +40,3 @@ class Patient(models.Model):
     
     def __str__(self):
         return self.patient_name
-
-
-# class Doctor_details(models.Model):
-#     d_id = models.IntegerField()
-#     d_name = models.CharField(max_length=100)
-#     d_email = models.EmailField(max_length=100)
-#     d_password = models.CharField
-
