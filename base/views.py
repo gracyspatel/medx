@@ -115,3 +115,10 @@ def update_patient(request,id):
         
     context = {'form':form,'header':'Update'}
     return render(request, 'base/add-patient.html', context)
+
+def delete_patient(request,id):
+  patient = Patient.objects.get(id=id)
+  if request.method == "POST":
+    patient.delete()
+    return redirect('patient-details')
+  return render(request, 'base/delete-patient.html', {'obj':patient})

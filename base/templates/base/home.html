@@ -43,6 +43,7 @@
                     <th scope="col">Gender</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -55,6 +56,7 @@
                             <td>{{patient.patient_sex}}</td>
                             <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
                             <td><a href={% url 'update-patient' patient.patient_id %}><i class="fa fa-edit"></i></a></td>
+                            <td><a href={% url 'delete-patient' patient.patient_id %}><i class="fa fa-trash"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
