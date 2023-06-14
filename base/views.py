@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login, logout
 from .models import Patient
@@ -92,6 +93,7 @@ def doctor_logout(request):
     logout(request)
     return redirect('doctor-login')
 
+@login_required(login_url="doctor-login")
 def main(request):
     current_time = datetime.datetime.now().time()
     if current_time < datetime.time(12):
@@ -103,7 +105,7 @@ def main(request):
     patient_list = Patient.objects.all()
     return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting})
 
-
+@login_required(login_url="doctor-login")
 def patients_list(request):
     # patient_list = Patient.objects.all()
     q = request.GET.get('q') if request.GET.get('q') != None else ""
@@ -113,6 +115,7 @@ def patients_list(request):
         )
     return render(request,'base/patient-details.html',context={"patients_details":patient_list})
 
+@login_required(login_url="doctor-login")
 def patient_details(request,id):
     # patient = None
     # for i in patient_table:
@@ -121,6 +124,7 @@ def patient_details(request,id):
     patient = Patient.objects.get(id=id)
     return render(request,'base/patient.html',context={"patient_detail":patient})
 
+@login_required(login_url="doctor-login")
 def add_patient(request):
     form = PatientForm()
     
@@ -132,6 +136,7 @@ def add_patient(request):
     context = {'form':form,'header':'Add'}
     return render(request,'base/add-patient.html',context)
 
+@login_required(login_url="doctor-login")
 def update_patient(request,id):
     patient = Patient.objects.get(id=id)
     form = PatientForm(instance=patient)
@@ -145,6 +150,7 @@ def update_patient(request,id):
     context = {'form':form,'header':'Update'}
     return render(request, 'base/add-patient.html', context)
 
+@login_required(login_url="doctor-login")
 def delete_patient(request,id):
   patient = Patient.objects.get(id=id)
   if request.method == "POST":
