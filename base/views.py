@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.db.models import Q
 from .models import Patient
+from .forms import PatientForm
 import datetime
 
 # dummy data 
@@ -74,7 +76,12 @@ def main(request):
     return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting})
 
 def patients_list(request):
-    patient_list = Patient.objects.all()
+    # patient_list = Patient.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') != None else ""
+    patient_list = Patient.objects.filter(
+            Q(patient_id__icontains = q) |
+            Q(patient_name__icontains = q)
+        )
     return render(request,'base/patient-details.html',context={"patients_details":patient_list})
 
 def patient_details(request,id):
@@ -84,3 +91,27 @@ def patient_details(request,id):
     #         patient = i
     patient = Patient.objects.get(id=id)
     return render(request,'base/patient.html',context={"patient_detail":patient})
+
+def add_patient(request):
+    form = PatientForm()
+    
+    if request.method == "POST":
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('patient-details')
+    context = {'form':form,'header':'Add'}
+    return render(request,'base/add-patient.html',context)
+
+def update_patient(request,id):
+    patient = Patient.objects.get(id=id)
+    form = PatientForm(instance=patient)
+    
+    if request.method == 'POST':
+        form = PatientForm(request.POST,instance=patient)
+        if form.is_valid():
+            form.save()
+            return redirect('patient-details')
+        
+    context = {'form':form,'header':'Update'}
+    return render(request, 'base/add-patient.html', context)

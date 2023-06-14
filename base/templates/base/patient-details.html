@@ -4,12 +4,15 @@
     <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
         <div>
           <a class="btn btn-light shadow-sm rounded-5 mb-2" href="/"><i class="fa fa-arrow-left"></i></a>
-          <div class="mt-2 mb-1"><h5 class="bar"><b>Patients Details</b></h5></div>
+          <div class="mt-2 mb-1 d-flex justify-content-between">
+            <h5 class="bar"><b>Patients Details</b></h5>
+            <a class="btn btn-primary" href={% url 'add-patient' %}>New Case &nbsp; <i class="fa fa-plus"></i></a>
+          </div>
         </div>
         <div>
-        <form class="d-flex gap-2 mb-3 mt-2">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form method="GET" action="{% url 'patient-details' %}" class="d-flex gap-2 mb-3 mt-2">
+            <input class="form-control" type="text" name="q" placeholder="Search" />
+            {% comment %} <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> {% endcomment %}
           </form>
         </div>
         <table class="table table-responsive table-bordered table-hover " style="overflow-x:hidden;overflow-y:auto;">
@@ -20,6 +23,7 @@
                 <th scope="col">Age</th>
                 <th scope="col">Phone No.</th>
                 <th scope="col">Sex</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -32,6 +36,7 @@
                         <td>+91 {{patient.patient_phone_number}}</td>
                         <td>{{patient.patient_sex}}</td>
                         <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
+                        <td><a href={% url 'update-patient' patient.patient_id %}><i class="fa fa-edit"></i></a></td>
                     </tr>
                 {% endfor %}
             </tbody>

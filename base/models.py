@@ -33,8 +33,11 @@ class Patient(models.Model):
     patient_alcohol = models.CharField(max_length=3, choices=CHOICES)
     patient_drugs = models.CharField(max_length=3, choices=CHOICES)
     updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now=True)
-
+    created = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-updated','-created']
+    
     def __str__(self):
         return self.patient_name
 

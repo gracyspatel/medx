@@ -5,14 +5,14 @@
         <div class="d-flex justify-content-between">
             <div class="mb-3">
                 <h6>Good {{greeting}},</h6>
-                <h5><b><span class="text-danger">Dr.</span> Gracy Sanjaykumar Patel</b></h5>
+                <h5><b><span class="text-danger">Dr.</span> Dhvani Sanjaykumar Patel</b></h5>
                 <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; Dermatologist &nbsp; </i>( MBBS, PG ) </p>
             </div>
             <div class="d-flex flex-column justify-content-startend text-start">
                 <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; Medo Health Pvt. Ltd.</p>
                 <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</p>
                 <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</p>
-                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; gracy1168@gmail.com</p>
+                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; dhvani@gmail.com</p>
             </div>
         </div>
         <div class="d-flex gap-3 ">
@@ -29,7 +29,7 @@
             <h5 class="bar"><b>Recent History &nbsp; <i class="fa fa-history"></i></b></h5>
             <div>
                 <a class="btn btn-primary" href={% url 'patient-details' %}>View All&nbsp; <i class="fa fa-eye"></i></a>
-                <button class="btn btn-primary">New Case &nbsp; <i class="fa fa-plus"></i></button>
+                <a class="btn btn-primary" href={% url 'add-patient' %}>New Case &nbsp; <i class="fa fa-plus"></i></a>
             </div>
         </div>
         <div>
@@ -42,6 +42,7 @@
                     <th scope="col">Phone No.</th>
                     <th scope="col">Gender</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,7 @@
                             <td>+91 {{patient.patient_phone_number}}</td>
                             <td>{{patient.patient_sex}}</td>
                             <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
+                            <td><a href={% url 'update-patient' patient.patient_id %}><i class="fa fa-edit"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
