@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden setheight">
+        <div class="mt-2 mb-1">
+            <h5 class="bar"><b>Login</b></h5>
+        </div>
+        <div class="h-75 d-flex align-items-center justify-content-center">
+            <form method="POST" action="" class="container">
+                {% csrf_token %}
+                <div class="form-group mb-2">
+                  <label class="mb-1" for="username">Username</label>
+                  <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username">
+                </div>
+                <div class="form-group mb-2">
+                  <label class="mb-1" for="password">Password</label>
+                  <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <br/>
+                {% for message in messages %}
+                    <small {% if message.tags %} class="text-danger {{ message.tags }}" {% endif %}>** {{message}}</small>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

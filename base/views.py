@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login, logout
 from .models import Patient
 from .forms import PatientForm
+from django.contrib import messages
 import datetime
 
 # dummy data 
@@ -64,6 +67,31 @@ patient_table = [
     }
 ]
 # Create your views here.
+def doctor_login(request):
+    
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request,"User does not exist")
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request,user)
+            return redirect("main")
+        else:
+            messages.error(request,"Incorrect Password")
+        
+    context = {}
+    return render(request,'base/login.html',context)
+
+def doctor_logout(request):
+    logout(request)
+    return redirect('doctor-login')
+
 def main(request):
     current_time = datetime.datetime.now().time()
     if current_time < datetime.time(12):
@@ -74,6 +102,7 @@ def main(request):
         greeting = "Evening"
     patient_list = Patient.objects.all()
     return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting})
+
 
 def patients_list(request):
     # patient_list = Patient.objects.all()
