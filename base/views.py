@@ -239,6 +239,22 @@ def update_patient(request,id):
     return render(request, 'base/add-patient.html', context)
 
 @login_required(login_url="doctor-login")
+def update_profile(request,id):
+    profile = Doctor.objects.get(doctor_id=id)
+    form = DoctorForm(instance=profile)
+    if(request.user != profile.doctor_id):
+        return redirect('main')
+    
+    if request.method == 'POST':
+        form = DoctorForm(request.POST,instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('main')
+        
+    context = {'form':form,'header':'Update'}
+    return render(request, 'base/add-profile.html', context)
+
+@login_required(login_url="doctor-login")
 def update_case(request,id):
     case = Case.objects.get(id=id)
     form = CaseForm(instance=case)

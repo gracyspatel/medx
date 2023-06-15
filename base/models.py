@@ -16,7 +16,7 @@ CHOICES = (
 
 # Create your models here.
 class Doctor(models.Model):
-    doctor_id = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    doctor_id = models.ForeignKey(User,on_delete=models.CASCADE)
     doctor_designation = models.CharField(max_length=100)
     doctor_education = models.CharField(max_length=100)
     doctor_hospital = models.CharField(max_length=100)
