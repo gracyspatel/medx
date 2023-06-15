@@ -47,5 +47,45 @@
         <small>{{patient_detail.patient_previous_medical_history}}</small>
     </div>
 </div>
+
+<div class="w-100 shadow-sm mt-3 p-3 d-flex flex-column">
+    <div class="mt-3 mb-2 d-flex align-items-center justify-content-between">
+        <h5 class="bar"><b>Medical Records &nbsp; <i class="fa fa-history"></i></b></h5>
+        <div>
+            <a class="btn btn-primary" href={% url 'add-case' %}>New Records &nbsp; <i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <hr/>
+    <div class="mt-2">
+        <table class="table table-responsive table-bordered table-hover " style="overflow-x:hidden;overflow-y:auto;">
+            <thead>
+              <tr>
+                <th scope="col">Case ID</th>
+                <th scope="col">Problem</th>
+                <th scope="col">Remarks</th>
+                <th scope="col">Date of Visit</th>
+                <th scope="col">Follow up</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in case %}
+                    <tr>
+                        <th scope="row">{{i.case_id}}</th>
+                        <td>{{i.case_name}}</td>
+                        <td>{{i.case_remarks}}</td>
+                        <td>{{i.created}}</td>
+                        <td>{{i.follow_up_visit}}</td>
+                        <td><a href={% url 'case' i.case_id %}><i class="fa fa-eye"></i></a></td>
+                        <td><a href={% url 'update-case' i.case_id %}><i class="fa fa-edit"></i></a></td>
+                        <td><a href={% url 'delete-case' i.case_id %}><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
     </div>
 {% endblock %}

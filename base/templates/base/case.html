@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+        <div>
+          <a class="btn btn-light shadow-sm rounded-5 mb-2" href="/"><i class="fa fa-arrow-left"></i></a>
+          <div class="mt-2 mb-1 d-flex justify-content-between">
+            <h5 class="bar"><b>Case Details</b></h5>
+          </div>
+        </div>
+        <div>
+        </div>
+        <table class="table table-responsive table-bordered table-hover " style="overflow-x:hidden;overflow-y:auto;">
+            <thead>
+              <tr>
+                <th scope="col">Case ID</th>
+                <th scope="col">Patient ID</th>
+                <th scope="col">Problem</th>
+                <th scope="col">Remarks</th>
+                <th scope="col">Date of Visit</th>
+                <th scope="col">Follow up</th>
+                <th scope="col">Doctor ID</th>
+              </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <th scope="row">{{case_detail.case_id}}</th>
+                        <td>{{case_detail.patient_id}}</td>
+                        <td>{{case_detail.case_name}}</td>
+                        <td>{{case_detail.case_remarks}}</td>
+                        <td>{{case_detail.updated}}</td>
+                        <td>{{case_detail.follow_up_visit}}</td>
+                        <td>{{case_detail.doctor_id}}</td>
+                    </tr>
+            </tbody>
+          </table>
+    </div>
+    <br/>
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+    <div>
+      <div class="mt-2 mb-1 d-flex justify-content-between">
+        <h5 class="bar"><b>Medications</b></h5>
+        <a class="btn btn-primary" href={% url 'add-medications' %}>New Medicine &nbsp; <i class="fa fa-plus"></i></a>
+      </div>
+      <table class="table table-responsive table-bordered table-hover " style="overflow-x:hidden;overflow-y:auto;">
+        <thead>
+          <tr>
+            <th scope="col">Medication ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Dosage</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Case ID</th>
+            <th scope="col">Doctor ID</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for med in medication_detail%}
+                <tr>
+                    <th scope="row">{{med.medication_id}}</th>
+                    <td>{{med.medication_name}}</td>
+                    <td>{{med.medication_dosage}}</td>
+                    <td>{{med.medication_duration}}</td>
+                    <td>{{med.case_id}}</td>
+                    <td>{{med.doctor_id}}</td>
+                    <td><a href={% url 'update-medication' med.medication_id %}><i class="fa fa-edit"></i></a></td>
+                    <td><a href={% url 'delete-medication' med.medication_id %}><i class="fa fa-trash"></i></a></td>
+                </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

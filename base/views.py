@@ -3,8 +3,8 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login, logout
-from .models import Patient
-from .forms import PatientForm
+from .models import Patient, Case, Medications
+from .forms import PatientForm, CaseForm, MedicationForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 import datetime
@@ -150,14 +150,19 @@ def patients_list(request):
 
 @login_required(login_url="doctor-login")
 def patient_details(request,id):
-    # patient = None
-    # for i in patient_table:
-    #     if i['patient_id'] == int(id):
-    #         patient = i
     patient = Patient.objects.get(id=id)
     if(request.user != patient.doctor_id):
         return redirect('patient-details')
-    return render(request,'base/patient.html',context={"patient_detail":patient})
+    case = Case.objects.all()
+    return render(request,'base/patient.html',context={"patient_detail":patient,"case":case})
+
+@login_required(login_url="doctor-login")
+def case_details(request,id):
+    case = Case.objects.get(id=id)
+    if(request.user != case.doctor_id):
+        return redirect('patient-details')
+    medication = Medications.objects.all()
+    return render(request,'base/case.html',context={"case_detail":case,"medication_detail":medication})
 
 @login_required(login_url="doctor-login")
 def add_patient(request):
@@ -170,6 +175,30 @@ def add_patient(request):
             return redirect('patient-details')
     context = {'form':form,'header':'Add'}
     return render(request,'base/add-patient.html',context)
+
+@login_required(login_url="doctor-login")
+def add_case(request):
+    form = CaseForm()
+    
+    if request.method == "POST":
+        form = CaseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('patient-details')
+    context = {'form':form,'header':'Add'}
+    return render(request,'base/add-case.html',context)
+
+@login_required(login_url="doctor-login")
+def add_medications(request):
+    form = MedicationForm()
+    
+    if request.method == "POST":
+        form = MedicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('patient-details')
+    context = {'form':form,'header':'Add'}
+    return render(request,'base/add-medications.html',context)
 
 @login_required(login_url="doctor-login")
 def update_patient(request,id):
@@ -188,6 +217,38 @@ def update_patient(request,id):
     return render(request, 'base/add-patient.html', context)
 
 @login_required(login_url="doctor-login")
+def update_case(request,id):
+    case = Case.objects.get(id=id)
+    form = CaseForm(instance=case)
+    if(request.user != case.doctor_id):
+        return redirect('patient-details')
+    
+    if request.method == 'POST':
+        form = CaseForm(request.POST,instance=case)
+        if form.is_valid():
+            form.save()
+            return redirect('patient-details')
+        
+    context = {'form':form,'header':'Update'}
+    return render(request, 'base/add-patient.html', context)
+
+@login_required(login_url="doctor-login")
+def update_medication(request,id):
+    medication = Medications.objects.get(id=id)
+    form = MedicationForm(instance=medication)
+    if(request.user != medication.doctor_id):
+        return redirect('patient-details')
+    
+    if request.method == 'POST':
+        form = MedicationForm(request.POST,instance=medication)
+        if form.is_valid():
+            form.save()
+            return redirect('patient-details')
+        
+    context = {'form':form,'header':'Update'}
+    return render(request, 'base/add-patient.html', context)
+
+@login_required(login_url="doctor-login")
 def delete_patient(request,id):
   patient = Patient.objects.get(id=id)
   if(request.user != patient.doctor_id):
@@ -195,4 +256,24 @@ def delete_patient(request,id):
   if request.method == "POST":
     patient.delete()
     return redirect('patient-details')
-  return render(request, 'base/delete-patient.html', {'obj':patient})
+  return render(request, 'base/delete.html', {'obj':patient})
+
+@login_required(login_url="doctor-login")
+def delete_case(request,id):
+  case = Case.objects.get(id=id)
+  if(request.user != case.doctor_id):
+        return redirect('patient-details')
+  if request.method == "POST":
+    case.delete()
+    return redirect('patient-details')
+  return render(request, 'base/delete.html', {'obj':case})
+
+@login_required(login_url="doctor-login")
+def delete_medication(request,id):
+  medication = Medications.objects.get(id=id)
+  if(request.user != medication.doctor_id):
+        return redirect('patient-details')
+  if request.method == "POST":
+    medication.delete()
+    return redirect('patient-details')
+  return render(request, 'base/delete.html', {'obj':medication})

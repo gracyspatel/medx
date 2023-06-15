@@ -6,9 +6,19 @@ urlpatterns = [
     path('login/',views.doctor_login,name="doctor-login"),
     path('register/',views.doctor_register,name="doctor-register"),
     path('logout/',views.doctor_logout,name="doctor-logout"),
+    
     path('patient-details/',views.patients_list,name="patient-details"),
     path('patient/<int:id>/',views.patient_details,name="patient"),
     path('add-patient/',views.add_patient,name="add-patient"),
     path('update-patient/<int:id>/',views.update_patient, name='update-patient'),
     path('delete-patient/<int:id>/',views.delete_patient, name='delete-patient'),
+    
+    path('case/<int:id>/',views.case_details,name="case"),
+    path('add-case/',views.add_case,name="add-case"),
+    path('update-case/<int:id>/',views.update_case, name='update-case'),
+    path('delete-case/<int:id>/',views.delete_case, name='delete-case'),
+
+    path('add-medications/',views.add_medications,name="add-medications"),
+    path('delete-medication/<int:id>/',views.delete_medication, name='delete-medication'),
+    path('update-medication/<int:id>/',views.update_medication, name='update-medication'),
 ]
