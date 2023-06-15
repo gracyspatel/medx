@@ -193,6 +193,8 @@ def add_patient(request):
         if form.is_valid():
             form.save()
             return redirect('patient-details')
+        else:
+            print("EROR")
     context = {'form':form,'header':'Add'}
     return render(request,'base/add-patient.html',context)
 
