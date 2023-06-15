@@ -1,5 +1,21 @@
 from django.forms import ModelForm
-from .models import Patient, Case, Medications
+from django import forms
+from .models import Patient, Case, Medications, User, Doctor
+from django.contrib.auth.forms import UserCreationForm
+
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
+
+class DoctorForm(ModelForm):
+    class Meta:
+        model = Doctor
+        fields = '__all__'
 
 class PatientForm(ModelForm):
     class Meta:

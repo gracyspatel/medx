@@ -6,12 +6,12 @@
             <div class="mb-3">
                 <h6>Good {{greeting}},</h6>
                 <h5><b><span class="text-danger">Dr.</span> {{request.user.first_name}} {{request.user.last_name}}</b></h5>
-                <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; Dermatologist &nbsp; </i>( MBBS, PG ) </p>
+                <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; {{doctor_detail.doctor_designation}} &nbsp; </i>( {{doctor_detail.doctor_education}} ) </p>
             </div>
             <div class="d-flex flex-column justify-content-startend text-start">
-                <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; Medo Health Pvt. Ltd.</p>
-                <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</p>
-                <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</p>
+                <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; {{doctor_detail.doctor_hospital}}</p>
+                <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; {{doctor_detail.doctor_location}}</p>
+                <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 {{doctor_detail.doctor_phone_number}}</p>
                 <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; {{request.user.email}}</p>
             </div>
         </div>

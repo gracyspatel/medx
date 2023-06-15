@@ -3,8 +3,8 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login, logout
-from .models import Patient, Case, Medications
-from .forms import PatientForm, CaseForm, MedicationForm
+from .models import Patient, Case, Medications, Doctor
+from .forms import PatientForm, CaseForm, MedicationForm, CustomUserCreationForm, DoctorForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 import datetime
@@ -96,15 +96,15 @@ def doctor_login(request):
 def doctor_register(request):
     if request.user.is_authenticated:
         return redirect('main')
-    form = UserCreationForm()
+    form = CustomUserCreationForm()
     
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
             login(request,user)
-            return redirect('main')
+            return redirect('add-profile')
         else:
             messages.error(request,"Some Error Occured")
     context = {'form':form}
@@ -134,7 +134,9 @@ def main(request):
             created__date = today,
             doctor_id = doctor_id
         ).count()
-    return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting,"patient_count":patient_count,"todays_patient":todays_patient})
+    
+    doctor_detail = Doctor.objects.get(doctor_id = User.objects.get(username=request.user).id)
+    return render(request,'base/home.html',context={"patients_details":patient_list[0:5],"greeting":greeting,"patient_count":patient_count,"todays_patient":todays_patient,"doctor_detail":doctor_detail})
 
 @login_required(login_url="doctor-login")
 def patients_list(request):
@@ -153,7 +155,10 @@ def patient_details(request,id):
     patient = Patient.objects.get(id=id)
     if(request.user != patient.doctor_id):
         return redirect('patient-details')
-    case = Case.objects.all()
+    # case = Case.objects.all()
+    case = Case.objects.filter(
+        patient_id = patient.patient_id
+    )
     return render(request,'base/patient.html',context={"patient_detail":patient,"case":case})
 
 @login_required(login_url="doctor-login")
@@ -161,8 +166,23 @@ def case_details(request,id):
     case = Case.objects.get(id=id)
     if(request.user != case.doctor_id):
         return redirect('patient-details')
-    medication = Medications.objects.all()
+    # medication = Medications.objects.all()
+    medication = Medications.objects.filter(
+        case_id = case.case_id
+    )
     return render(request,'base/case.html',context={"case_detail":case,"medication_detail":medication})
+
+@login_required(login_url="doctor-login")
+def add_profile(request):
+    form = DoctorForm()
+    
+    if request.method == "POST":
+        form = DoctorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('main')
+    context = {'form':form,'header':'Edit'}
+    return render(request,'base/add-profile.html',context)
 
 @login_required(login_url="doctor-login")
 def add_patient(request):
