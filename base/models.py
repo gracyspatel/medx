@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # for gender choice filling
 GENDER_CHOICES = (
@@ -14,8 +15,20 @@ CHOICES = (
 
 
 # Create your models here.
+class Doctor(models.Model):
+    doctor_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    doctor_designation = models.CharField(max_length=100 ,null=False)
+    doctor_education = models.CharField(max_length=100 , null=False)
+    doctor_hospital = models.CharField(max_length=100, null=False)
+    doctor_location = models.CharField(max_length=100 , null=False)
+    doctor_phone_number =  models.CharField(max_length=10, null=False)
+
+    def __str__(self):
+        return self.doctor_designation
+
 class Patient(models.Model):
-    patient_id = models.IntegerField()
+    doctor_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
     patient_name = models.CharField(max_length=100)
     patient_email = models.EmailField(max_length=100)
     patient_phone_number = models.CharField(max_length=10, null=False)
@@ -41,10 +54,35 @@ class Patient(models.Model):
     def __str__(self):
         return self.patient_name
 
+class Case(models.Model):
+    id = models.AutoField(primary_key=True)
+    doctor_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    patient_id = models.ForeignKey(Patient,on_delete=models.CASCADE)
+    case_name = models.CharField(max_length=100)
+    case_remarks = models.CharField(max_length=700)
+    follow_up_visit = models.DateTimeField()
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
-# class Doctor_details(models.Model):
-#     d_id = models.IntegerField()
-#     d_name = models.CharField(max_length=100)
-#     d_email = models.EmailField(max_length=100)
-#     d_password = models.CharField
+    class Meta:
+        ordering = ['-updated','-created']
+    
+    def __str__(self):
+        return self.case_name
+    
+class Medications(models.Model):
+    id = models.AutoField(primary_key=True)
+    case_id = models.ForeignKey(Case,on_delete=models.CASCADE)
+    doctor_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    patient_id = models.ForeignKey(Patient,on_delete=models.CASCADE)
+    medication_name = models.CharField(max_length=100)
+    medication_dosage = models.CharField(max_length=700)
+    medication_duration = models.IntegerField()
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-updated','-created']
+    
+    def __str__(self):
+        return self.medication_name

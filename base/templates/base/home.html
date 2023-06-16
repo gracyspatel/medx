@@ -5,24 +5,24 @@
         <div class="d-flex justify-content-between">
             <div class="mb-3">
                 <h6>Good {{greeting}},</h6>
-                <h5><b><span class="text-danger">Dr.</span> Dhvani Sanjaykumar Patel</b></h5>
-                <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; Dermatologist &nbsp; </i>( MBBS, PG ) </p>
+                <h5><b><span class="text-danger">Dr.</span> {{request.user.first_name}} {{request.user.last_name}}</b></h5>
+                <p class="lh-1"><i class="fa fa-user-md"></i> <i> &nbsp; {{doctor_detail.doctor_designation}} &nbsp; </i>( {{doctor_detail.doctor_education}} ) </p>
             </div>
             <div class="d-flex flex-column justify-content-startend text-start">
-                <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; Medo Health Pvt. Ltd.</p>
-                <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; Valsad, Gujarat, India</p>
-                <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 7203051890</p>
-                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; dhvani@gmail.com</p>
+                <p class="lh-1"><i class="fa fa-hospital-o"></i> &nbsp; {{doctor_detail.doctor_hospital}}</p>
+                <p class="lh-1"><i class="fa fa-map-marker"></i> &nbsp; {{doctor_detail.doctor_location}}</p>
+                <p class="lh-1"><i class="fa fa-phone"></i> &nbsp; +91 {{doctor_detail.doctor_phone_number}}</p>
+                <p class="lh-1"><i class="fa fa-envelope"></i> &nbsp; {{request.user.email}}</p>
             </div>
         </div>
         <div class="d-flex gap-3 ">
             <div class="w-25 shadow-sm p-2">
                 <h6><b>Total Patients</b></h6>
-                <h3>2300</h3>
+                <h3>{{patient_count}}</h3>
             </div>
             <div class="w-25 shadow-sm p-2">
                 <h6><b>Today's Total Patient</b></h6>
-                <h3>34</h3>
+                <h3>{{todays_patient}}</h3>
             </div>
         </div>
         <div class="mt-3 mb-2 d-flex align-items-center justify-content-between">
@@ -49,14 +49,14 @@
                 <tbody>
                     {% for patient in patients_details %}
                         <tr>
-                            <th scope="row">{{patient.patient_id}}</th>
+                            <td>{{patient.id}}</td>
                             <td>{{patient.patient_name}}</td>
                             <td>{{patient.patient_dob}}</td>
                             <td>+91 {{patient.patient_phone_number}}</td>
                             <td>{{patient.patient_sex}}</td>
-                            <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
-                            <td><a href={% url 'update-patient' patient.patient_id %}><i class="fa fa-edit"></i></a></td>
-                            <td><a href={% url 'delete-patient' patient.patient_id %}><i class="fa fa-trash"></i></a></td>
+                            <td><a href={% url 'patient' patient.id %}><i class="fa fa-eye"></i></a></td>
+                            <td><a href={% url 'update-patient' patient.id %}><i class="fa fa-edit"></i></a></td>
+                            <td><a href={% url 'delete-patient' patient.id %}><i class="fa fa-trash"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

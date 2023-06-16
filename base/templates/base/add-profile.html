@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
+        <div>
+            <a class="btn btn-light shadow-sm rounded-5 mb-2" href="/"><i class="fa fa-arrow-left"></i></a>
+        </div>
+        <div>
+            <div class="mt-2 mb-1 d-flex justify-content-between">
+                <h5 class="bar"><b>{{header}} Profile</b></h5>
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-primary w-25" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

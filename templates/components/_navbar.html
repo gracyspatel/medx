@@ -4,9 +4,20 @@
         <b>Med<span class="text-danger">X</span></b>
       </a>
       {% if request.user.is_authenticated %}
-        <a class="btn btn-primary" href={% url 'doctor-logout' %}>Logout &nbsp; <i class="fa fa-sign-out"></i></a>
-      {% else %}  
-        <a class="btn btn-primary" href={% url 'doctor-login' %}>Register &nbsp; <i class="fa fa-user-circle-o"></i></a>
+      {% comment %} <a class="btn btn-primary" href={% url 'doctor-logout' %}>Logout &nbsp; <i class="fa fa-sign-out"></i></a> {% endcomment %}
+      <div class="d-flex flex-column align-items-center justify-content-center gap-5">
+        <div class="dropdown">
+          <button class="btn btn-outline dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <b>{{request.user}}</b>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href={% url 'update-profile' request.user.id %}><i class="fa fa-user"></i> &nbsp; Profile </a>
+            <a class="dropdown-item" href={% url 'doctor-logout' %}><i class="fa fa-sign-out"></i> &nbsp; Logout </a>
+          </div>
+        </div>
+      </div>
+        {% else %}  
+        <a class="btn btn-primary" href={% url 'doctor-register' %}>Register &nbsp; <i class="fa fa-user-circle-o"></i></a>
       {% endif %}
     </div>
 </nav>

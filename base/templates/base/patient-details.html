@@ -23,6 +23,7 @@
                 <th scope="col">Age</th>
                 <th scope="col">Phone No.</th>
                 <th scope="col">Sex</th>
+                <th scope="col">Doctor Name</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -31,14 +32,15 @@
             <tbody>
                 {% for patient in patients_details %}
                     <tr>
-                        <th scope="row">{{patient.patient_id}}</th>
+                        <th scope="row">{{patient.id}}</th>
                         <td>{{patient.patient_name}}</td>
                         <td>{{patient.patient_dob}}</td>
                         <td>+91 {{patient.patient_phone_number}}</td>
                         <td>{{patient.patient_sex}}</td>
-                        <td><a href={% url 'patient' patient.patient_id %}><i class="fa fa-eye"></i></a></td>
-                        <td><a href={% url 'update-patient' patient.patient_id %}><i class="fa fa-edit"></i></a></td>
-                        <td><a href={% url 'delete-patient' patient.patient_id %}><i class="fa fa-trash"></i></a></td>
+                        <td>{{patient.doctor_id}}</td>
+                        <td><a href={% url 'patient' patient.id %}><i class="fa fa-eye"></i></a></td>
+                        <td><a href={% url 'update-patient' patient.id %}><i class="fa fa-edit"></i></a></td>
+                        <td><a href={% url 'delete-patient' patient.id %}><i class="fa fa-trash"></i></a></td>
                     </tr>
                 {% endfor %}
             </tbody>
