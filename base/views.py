@@ -144,7 +144,6 @@ def patients_list(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ""
     doctor_id = User.objects.get(username=request.user).id 
     patient_list = Patient.objects.filter(
-            Q(patient_id__icontains = q) |
             Q(patient_name__icontains = q),
             doctor_id = doctor_id
         )
@@ -157,7 +156,7 @@ def patient_details(request,id):
         return redirect('patient-details')
     # case = Case.objects.all()
     case = Case.objects.filter(
-        patient_id = patient.patient_id
+        patient_id = patient.id
     )
     return render(request,'base/patient.html',context={"patient_detail":patient,"case":case})
 
@@ -168,7 +167,7 @@ def case_details(request,id):
         return redirect('patient-details')
     # medication = Medications.objects.all()
     medication = Medications.objects.filter(
-        case_id = case.case_id
+        case_id = case.id
     )
     return render(request,'base/case.html',context={"case_detail":case,"medication_detail":medication})
 
@@ -186,7 +185,7 @@ def add_profile(request):
 
 @login_required(login_url="doctor-login")
 def add_patient(request):
-    form = PatientForm()
+    form = PatientForm(initial={'doctor_id':request.user})
     
     if request.method == "POST":
         form = PatientForm(request.POST)
@@ -199,9 +198,9 @@ def add_patient(request):
     return render(request,'base/add-patient.html',context)
 
 @login_required(login_url="doctor-login")
-def add_case(request):
-    form = CaseForm()
-    
+def add_case(request,id):
+    patient = Patient.objects.get(id=id)
+    form = CaseForm(initial={'doctor_id':request.user,'patient_id':patient.id})
     if request.method == "POST":
         form = CaseForm(request.POST)
         if form.is_valid():
@@ -211,8 +210,10 @@ def add_case(request):
     return render(request,'base/add-case.html',context)
 
 @login_required(login_url="doctor-login")
-def add_medications(request):
-    form = MedicationForm()
+def add_medications(request,id):
+    # patient = Patient.objects.get(id=pid)
+    case = Case.objects.get(id=id)
+    form = MedicationForm(initial={'doctor_id':request.user,'case_id':case,'patient_id':case.patient_id})
     
     if request.method == "POST":
         form = MedicationForm(request.POST)
@@ -268,7 +269,7 @@ def update_case(request,id):
             return redirect('patient-details')
         
     context = {'form':form,'header':'Update'}
-    return render(request, 'base/add-patient.html', context)
+    return render(request, 'base/add-case.html', context)
 
 @login_required(login_url="doctor-login")
 def update_medication(request,id):
@@ -284,7 +285,7 @@ def update_medication(request,id):
             return redirect('patient-details')
         
     context = {'form':form,'header':'Update'}
-    return render(request, 'base/add-patient.html', context)
+    return render(request, 'base/add-medications.html', context)
 
 @login_required(login_url="doctor-login")
 def delete_patient(request,id):

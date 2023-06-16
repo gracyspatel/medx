@@ -16,11 +16,11 @@ urlpatterns = [
     path('delete-patient/<int:id>/',views.delete_patient, name='delete-patient'),
     
     path('case/<int:id>/',views.case_details,name="case"),
-    path('add-case/',views.add_case,name="add-case"),
+    path('add-case/<int:id>',views.add_case,name="add-case"),
     path('update-case/<int:id>/',views.update_case, name='update-case'),
     path('delete-case/<int:id>/',views.delete_case, name='delete-case'),
 
-    path('add-medications/',views.add_medications,name="add-medications"),
+    path('add-medications/<int:id>/',views.add_medications,name="add-medications"),
     path('delete-medication/<int:id>/',views.delete_medication, name='delete-medication'),
     path('update-medication/<int:id>/',views.update_medication, name='update-medication'),
 ]
