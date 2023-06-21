@@ -9,66 +9,22 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 import datetime
 from datetime import date
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
-# dummy data 
-patient_table = [
-    {
-        "patient_id":1,
-        "patient_name":"Gracy Patel",
-        "patient_age":21,
-        "patient_phone":7203051890,
-        "patient_sex":"Female",
-    },
-    {
-        "patient_id":2,
-        "patient_name":"Ayush Patel",
-        "patient_age":21,
-        "patient_phone":9845578786,
-        "patient_sex":"Male",
-    },
-    {
-        "patient_id":3,
-        "patient_name":"Raj Chavan",
-        "patient_age":25,
-        "patient_phone":9098898767,
-        "patient_sex":"Male",
-    },
-    {
-        "patient_id":4,
-        "patient_name":"Viren Patel",
-        "patient_age":21,
-        "patient_phone":9098878765,
-        "patient_sex":"Male",
-    },
-    {
-        "patient_id":5,
-        "patient_name":"Ram Patel",
-        "patient_age":20,
-        "patient_phone":7203098989,
-        "patient_sex":"Female",
-    },
-    {
-        "patient_id":6,
-        "patient_name":"Vini Tandel",
-        "patient_age":20,
-        "patient_phone":7767656543,
-        "patient_sex":"Female",
-    },
-    {
-        "patient_id":7,
-        "patient_name":"Piper Grey",
-        "patient_age":21,
-        "patient_phone":7767689890,
-        "patient_sex":"Male",
-    },
-    {
-        "patient_id":8,
-        "patient_name":"Sagar Patel",
-        "patient_age":24,
-        "patient_phone":99898878765,
-        "patient_sex":"Male",
-    }
-]
+# Create your views here.
+@login_required(login_url="doctor-login")
+def generatePDF(request):
+    buffer = io.BytesIO()
+    x = canvas.Canvas(buffer)
+    x.drawString(100, 100, "Let's generate this pdf file.")
+    x.showPage()
+    x.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='attempt1.pdf')
+
+
 # Create your views here.
 def doctor_login(request):
     if request.user.is_authenticated:
@@ -190,8 +146,8 @@ def add_patient(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('patient-details')
+            instance = form.save()
+            return redirect('patient',instance.id)
         else:
             print("EROR")
     context = {'form':form,'header':'Add'}
@@ -205,7 +161,7 @@ def add_case(request,id):
         form = CaseForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('patient-details')
+            return redirect('patient',patient.id)
     context = {'form':form,'header':'Add'}
     return render(request,'base/add-case.html',context)
 
@@ -233,8 +189,8 @@ def update_patient(request,id):
     if request.method == 'POST':
         form = PatientForm(request.POST,instance=patient)
         if form.is_valid():
-            form.save()
-            return redirect('patient-details')
+            instance = form.save()
+            return redirect('patient',instance.id)
         
     context = {'form':form,'header':'Update'}
     return render(request, 'base/add-patient.html', context)
@@ -265,8 +221,9 @@ def update_case(request,id):
     if request.method == 'POST':
         form = CaseForm(request.POST,instance=case)
         if form.is_valid():
-            form.save()
-            return redirect('patient-details')
+            instance = form.save()
+            patient = Patient.objects.get(patient_name=instance.patient_id)
+            return redirect('patient',patient.id)
         
     context = {'form':form,'header':'Update'}
     return render(request, 'base/add-case.html', context)
