@@ -23,4 +23,6 @@ urlpatterns = [
     path('add-medications/<int:id>/',views.add_medications,name="add-medications"),
     path('delete-medication/<int:id>/',views.delete_medication, name='delete-medication'),
     path('update-medication/<int:id>/',views.update_medication, name='update-medication'),
+    
+    path('generate-pdf/',views.generatePDF,name="generate-pdf")
 ]

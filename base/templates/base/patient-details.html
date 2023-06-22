@@ -3,7 +3,7 @@
 {% block body %}
     <div class="shadow-sm p-3 d-flex flex-column overflow-hidden">
         <div>
-          <a class="btn btn-light shadow-sm rounded-5 mb-2" href="/"><i class="fa fa-arrow-left"></i></a>
+          <a class="btn btn-light shadow-sm rounded-5 mb-2" href="{{request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left"></i></a>
           <div class="mt-2 mb-1 d-flex justify-content-between">
             <h5 class="bar"><b>Patients Details</b></h5>
             <a class="btn btn-primary" href={% url 'add-patient' %}>New Case &nbsp; <i class="fa fa-plus"></i></a>
